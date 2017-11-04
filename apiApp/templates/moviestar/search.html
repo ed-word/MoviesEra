@@ -1,0 +1,384 @@
+	<html lang="en">
+	{% load static %}
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Movies ERA</title>
+		<link rel="icon" type="image/png" href="{% static 'moviestar/images/favicon.png' %}">
+		<link href="{% static 'moviestar/css/slick.css' %}" rel="stylesheet">
+		<link href="{% static 'moviestar/css/bootstrap.min.css' %}" rel="stylesheet">
+		<link href="{% static 'moviestar/css/venobox.css' %}" rel="stylesheet">
+		<link href="{% static 'moviestar/css/style.css' %}" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+		<script src="{% static 'moviestar/js/jquery-2.2.4.min.js' %}"></script> 
+		<script src="{% static 'moviestar/js/bootstrap.min.js' %}"></script>
+
+
+		<script src="{% static 'moviestar/js/custom.js' %}"></script>
+		<script src="{% static 'moviestar/js/gmap3.min.js' %}"></script>
+		<script src="{% static 'moviestar/js/headhesive.min.js' %}"></script>
+
+		<script src="{% static 'moviestar/js/jquery-ui.min.js' %}"></script>
+		<script src="{% static 'moviestar/js/matchHeight.min.js' %}"></script>
+		<script src="{% static 'moviestar/js/modernizr.custom.js' %}"></script>
+		<script src="{% static 'moviestar/js/slick.min.js' %}"></script>
+		<script src="{% static 'moviestar/js/venobox.min.js' %}"></script>
+
+	</head>
+	<script type="text/javascript">
+		document.getElementById('pers').onclick=function(){
+			console.log('hi');
+			$('#person').removeAttr('style');
+			$('#movie').css({'display':'none'});
+
+			var elem=document.getElementById('pers');
+			elem.classList.add('active');
+			document.getElementById('movi').classList.remove('active');
+
+		}
+		document.getElementById('movi').onclick=function(){
+			console.log('hi');
+			$('#movie').removeAttr('style');
+			$('#person').css({'display':'none'});
+			var elem=document.getElementById('movi');
+			elem.classList.add('active');
+			document.getElementById('pers').classList.remove('active');
+		}
+	</script>
+	<body>
+
+		<div class="wrapper">
+
+			<div class="navbar" role="navigation">
+
+				<div class="heading">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="search">
+									<a href="#">
+										<i class="material-icons">search</i>
+										<span><a href="/search/">Search</a></span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container">
+					<div class="navbar-header">
+						<a href="/" class="logo" title="Craft beer landing page">
+							<h1 style="color: white; border: none;">Movies ERA</h1>
+						</a>
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar top-bar"></span>
+							<span class="icon-bar middle-bar"></span>
+							<span class="icon-bar bottom-bar"></span>
+						</button>
+					</div>
+					<div class="navbar-collapse collapse">
+						<ul id="menu-primary" class="nav navbar-nav">
+							<li>
+								<a href="/">Home</a>
+							</li>
+							
+							<li class="active">
+								<a href="/search/">Movies & Tv</a>
+							</li>
+							
+							<li>
+								<a class="loginLink" href="/logout/">Logout</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+
+
+	{% block content %}
+
+	<!--Main Slide -->
+<!-- <div id="hero" class="carousel slide carousel-fade" data-ride="carousel"> -->
+
+		<!-- <img src="{% static 'moviestar/images/scroll-arrow.svg' %}" alt="Scroll down" class="scroll" /> -->
+		<!-- <div class="container">
+			<ol class="carousel-indicators">
+				<li data-target="#hero" data-slide-to="0" class="active"></li>
+				<li data-target="#hero" data-slide-to="1"></li>
+				<li data-target="#hero" data-slide-to="2"></li>
+				<li data-target="#hero" data-slide-to="3"></li>
+				<li data-target="#hero" data-slide-to="4"></li>
+				<li data-target="#hero" data-slide-to="5"></li>
+				<li data-target="#hero" data-slide-to="6"></li>
+				<li data-target="#hero" data-slide-to="7"></li>
+			</ol>
+		</div>
+	 -->
+
+	<!-- <div class="carousel-inner" role="listbox"> -->
+
+	<!-- <form class="form" method="POST" action="/searchMovie/">
+		{% csrf_token %}
+		<div class="container">
+			<div class="row">
+				<input class="form-control" type="text" name="search" placeholder="search">
+			</div>
+		</div>
+	</form> -->
+			<!-- <div class="item active" style="background-image: url({{First.backdrop}})">
+				<div class="container">
+					<div class="row blurb scrollme animateme" data-when="exit" data-from="0" data-to="1" data-opacity="0" data-translatey="100">
+						<div class="col-md-9">
+							<span class="title">
+								{% for gen in First.genreName %}
+									{{gen}}
+								{% endfor %}
+							</span>
+
+							{% if First.isTV %}
+								<h1><a href="tv/{{First.ID}}" style="color:white;">{{First.title}}</a></h1>
+							{% else %}
+								<h1><a href="movie/{{First.ID}}" style="color:white;"> {{First.title}} </a></h1>
+							{% endif %}
+
+							<p>{{First.overview}}</p>
+							
+
+							<div class="buttons">
+
+							<div class="star-rating">
+								{% for x in First.userrating %}
+									<i class="material-icons">star_rate</i>
+								{% endfor %}
+							</div>
+							
+	  						
+								{% if First.trailer != 0 %}
+									<a href={{First.trailer}} data-vbtype="video" class="venobox btn btn-default">
+										<i class="material-icons">play_arrow</i>
+										<span>Play trailer</span>
+									</a>
+								{% endif %}
+							</div>
+						
+						</div>
+					</div>
+				</div>
+			</div> -->
+
+			<!-- {% for mt in MoviesTV %} -->
+			<!-- <div class="item" style="background-image: url({{mt.backdrop}})">
+				<div class="container">
+					<div class="row blurb scrollme animateme" data-when="exit" data-from="0" data-to="1" data-opacity="0" data-translatey="100">
+						<div class="col-md-9">
+							<span class="title">
+								{% for gen in mt.genreName %}
+									{{gen}} 
+								{% endfor %}
+							</span>
+
+							{% if mt.isTV %}
+								<h1><a href="tv/{{mt.ID}}" style="color:white;">{{mt.title}}</a></h1>
+							{% else %}
+								<h1><a href="movie/{{mt.ID}}" style="color:white;"> {{mt.title}} </a></h1>
+							{% endif %}
+							
+							<p>{{mt.overview}}</p>
+
+
+							<div class="buttons">
+
+							<div class="star-rating">
+								{% for x in mt.userrating %}
+									<i class="material-icons">star_rate</i>
+								{% endfor %}
+							</div>
+								
+								{% if mt.trailer != 0 %}
+									<a href={{mt.trailer}} data-vbtype="video" class="venobox btn btn-default">
+										<i class="material-icons">play_arrow</i>
+										<span>Play trailer</span>
+									</a>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			<!-- {% endfor %} -->
+	<!-- </div>
+</div> -->
+
+
+			<!--Main Slide -->
+			<div id="hero" class="carousel slide carousel-fade" data-ride="carousel">
+
+
+				<div class="carousel-inner" role="listbox">
+
+
+
+
+		<!-- 	<div class="navbar" role="navigation">
+
+				<div class="heading">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="search">
+									<a href="#">
+										<i class="material-icons">search</i>
+										<span><a href="/search/">Search</a></span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container">
+					<div class="navbar-header">
+						<a href="/" class="logo" title="Craft beer landing page">
+							<h1 style="color: white; border: none;">Movies ERA</h1>
+						</a>
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar top-bar"></span>
+							<span class="icon-bar middle-bar"></span>
+							<span class="icon-bar bottom-bar"></span>
+						</button>
+					</div>
+					<div class="navbar-collapse collapse">
+						<ul id="menu-primary" class="nav navbar-nav">
+							<li class="active">
+								<a href="/">Home</a>
+							</li>
+							<li>
+								<a href="recommendations">Recommendations</a>
+							</li>
+							<li>
+								<a href="/movie/12">Movies & Tv</a>
+							</li>
+							<li>
+								<a href="news.html">Watchlist</a>
+							</li>
+							<li>
+								<a class="loginLink" href="/logout/">Logout</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		-->
+
+
+		<!-- <div class="container"> -->
+						<!-- <h2>Search</h2>
+						<br>
+						<ul class="nav nav-tabs">
+							<li id="movi" class="active"><a style="margin-right: 0" href="#">Movie</a></li>
+							<li id="pers"><a href="#">Person</a></li>
+						</ul> -->
+
+						<div class="container">
+
+							<div class="row">
+								<h1 style="border-bottom: 0px;">Search</h1>
+
+								<!-- <div class="navbar-header">
+									<div class="icon-addon addon-lg"> -->
+										
+										<form class="form" method="POST" action="/search/">
+											{% csrf_token %}
+											
+											<div class="row" style="width: 100%; margin: 0px 0px 0px 0px;">
+												<div id="movie" class="col-md-6">
+													<input style="width: 100%;" class="form-control" type="text" name="movie" placeholder="Enter Movie title">
+													<i class="fa fa-search"></i>
+												</div>
+												<div id="tv" class="col-md-6">
+
+													<input class="form-control" type="text" name="tv" placeholder="Enter Tv title" >
+													<i class="fa fa-search"></i>
+
+												</div>
+											</div><br><br>
+											<button type="submit" class="btn" style="background-color: #0000FF;">Search</button>
+										</form>
+
+
+
+									<!-- </div>
+									</div> -->
+								</div>
+							</div>
+							<!-- </div> -->
+
+
+						</div>
+					</div>
+
+					{% endblock %}
+					<footer>
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-3">
+									<h6>Get in touch</h6>
+									<ul>
+										<li><a href="#">FAQs</a></li>
+										<li><a href="#">Give us feedback</a></li>
+										<li><a href="#">Contact us</a></li>
+									</ul>
+								</div>
+								<div class="col-sm-3">
+									<h6>About Movie star</h6>
+									<ul>
+										<li><a href="#">About us</a></li>
+										<li><a href="#">Find us</a></li>
+										<li><a href="#">Schedule</a></li>
+										<li><a href="#">News</a></li>
+									</ul>
+								</div>
+								<div class="col-sm-3">
+									<h6>Legal stuff</h6>
+									<ul>
+										<li><a href="#">Terms &amp; Conditions</a></li>
+										<li><a href="#">Privacy policy</a></li>
+										<li><a href="#">Cookie policy</a></li>
+									</ul>
+								</div>
+								<div class="col-sm-3">
+									<h6>Connect with us</h6>
+									<ul>
+										<li><a href="#"><i class="fa fa-facebook"></i> Facebook</a></li>
+										<li><a href="#"><i class="fa fa-twitter"></i> Twitter</a></li>
+										<li><a href="#"><i class="fa fa-google-plus"></i> Google +</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="copyright">
+			<p>2017 &copy; Movie ERA / <a href="#">Web design by Era (Edward Ria & Amit)</a></p>
+								
+							</div>
+						</div>
+					</footer>
+				</div>
+				<script src="js/jquery-2.2.4.min.js"></script>
+				<script src="js/jquery-ui.min.js"></script>
+				<script src="js/bootstrap.min.js"></script>
+				<script src="js/headhesive.min.js"></script>
+				<script src="js/matchHeight.min.js"></script>
+				<script src="js/modernizr.custom.js"></script>
+				<script src="js/slick.min.js"></script>
+				<script src="js/venobox.min.js"></script>
+				<script src="../../../use.fontawesome.com/4dfd2d448a.js"></script>
+				<script src="js/custom.js"></script>
+			</body>
+			</html>

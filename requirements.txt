@@ -1,0 +1,4 @@
+django
+django-allauth
+requests-cache
+python-memcached

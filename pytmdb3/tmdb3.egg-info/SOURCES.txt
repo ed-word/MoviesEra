@@ -1,0 +1,14 @@
+README.md
+setup.py
+tmdb3/__init__.py
+tmdb3/locales.py
+tmdb3/pager.py
+tmdb3/request.py
+tmdb3/tmdb_api.py
+tmdb3/tmdb_auth.py
+tmdb3/tmdb_exceptions.py
+tmdb3/util.py
+tmdb3.egg-info/PKG-INFO
+tmdb3.egg-info/SOURCES.txt
+tmdb3.egg-info/dependency_links.txt
+tmdb3.egg-info/top_level.txt
