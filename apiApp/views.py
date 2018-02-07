@@ -12,8 +12,8 @@ from django.contrib.auth.models import User
 import pickle
 from django.http import HttpResponse
 import os
+from django.conf import settings
 
-ROOT_PATH = os.path.abspath(os.path.dirname(__name__))
 
 key = '79f8797f2c2e527e4e396dfe9816a3cd'
 set_key(key)
@@ -51,7 +51,7 @@ def popularTV(GenreTVList):
 
 
 def refreshGenreFinal(request):
-    pickleFile = open(ROOT_PATH + '/apiApp/dataDictionary/tempData.p', 'rb')
+    pickleFile = open(os.path.join(settings.PROJECT_ROOT, 'dataDictionary/tempData.p'), 'rb')
     var_dict = pickle.load(pickleFile)
 
     genresMovie = ['Romance', 'Comedy', 'Drama']
@@ -60,7 +60,7 @@ def refreshGenreFinal(request):
     for g in GenreMovieList:
         key = g + 'Movie'
         var_dict[key] = GenreMovieList[g][0:4]
-    pickleFile = open(ROOT_PATH + '/apiApp/dataDictionary/data.p', 'wb')
+    pickleFile = open(os.path.join(settings.PROJECT_ROOT, 'dataDictionary/data.p'), 'wb')
     pickle.dump(var_dict, pickleFile)
     return HttpResponse('<h1>GenreFinal done go to /data </h1>')
 
@@ -71,13 +71,13 @@ def refreshSlide(request):
     var_dict['First'] = first_movie
     var_dict['MoviesTV'] = movies_tv
 
-    pickleFile = open(ROOT_PATH + '/apiApp/dataDictionary/tempData.p', 'wb')
+    pickleFile = open(os.path.join(settings.PROJECT_ROOT, 'dataDictionary/tempData.p'), 'wb')
     pickle.dump(var_dict, pickleFile)
     return HttpResponse('<h1>Slide done go to /genre </h1>')
 
 
 def refreshGenreMovie(request):
-    pickleFile = open(ROOT_PATH + '/apiApp/dataDictionary/tempData.p', 'rb')
+    pickleFile = open(os.path.join(settings.PROJECT_ROOT, 'dataDictionary/tempData.p'), 'rb')
     var_dict = pickle.load(pickleFile)
 
     genresMovie = ['Crime', 'Thriller', 'Fantasy', 'Science Fiction']
@@ -86,13 +86,13 @@ def refreshGenreMovie(request):
     popMovies = popularMovies(GenreMovieList)
     var_dict['popMovies'] = popMovies
 
-    pickleFile = open(ROOT_PATH + '/apiApp/dataDictionary/tempData.p', 'wb')
+    pickleFile = open(os.path.join(settings.PROJECT_ROOT, 'dataDictionary/tempData.p'), 'wb')
     pickle.dump(var_dict, pickleFile)
     return HttpResponse('<h1>GenreMovie done go to /genreTV </h1>')
 
 
 def refreshGenreTV(request):
-    pickleFile = open(ROOT_PATH + '/apiApp/dataDictionary/tempData.p', 'rb')
+    pickleFile = open(os.path.join(settings.PROJECT_ROOT, 'dataDictionary/tempData.p'), 'rb')
     var_dict = pickle.load(pickleFile)
 
     genresTV = ['Comedy', 'Drama', 'Mystery', 'Crime']
@@ -101,19 +101,19 @@ def refreshGenreTV(request):
     popTV = popularTV(GenreTVList)
     var_dict['popTV'] = popTV
 
-    pickleFile = open(ROOT_PATH + '/apiApp/dataDictionary/tempData.p', 'wb')
+    pickleFile = open(os.path.join(settings.PROJECT_ROOT, 'dataDictionary/tempData.p'), 'wb')
     pickle.dump(var_dict, pickleFile)
     return HttpResponse('<h1>GenreTV done go to /genreFinal </h1>')
 
 
 def refreshData(request):
-    pickleFile = open(ROOT_PATH + '/apiApp/dataDictionary/data.p', 'rb')
+    pickleFile = open(os.path.join(settings.PROJECT_ROOT, 'dataDictionary/data.p'), 'rb')
     var_dict = pickle.load(pickleFile)
     return render(request, 'moviestar/index.html', var_dict)
 
 
 def khatam(request):
-    pickleFile = open(ROOT_PATH + '/apiApp/dataDictionary/data.p', 'rb')
+    pickleFile = open(os.path.join(settings.PROJECT_ROOT, 'dataDictionary/data.p'), 'rb')
     var_dict = pickle.load(pickleFile)
     return render(request, 'moviestar/index.html', var_dict)
 
