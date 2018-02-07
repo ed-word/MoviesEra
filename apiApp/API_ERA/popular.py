@@ -11,8 +11,6 @@ try:
 except:
 	from Classes import Movies, TV
 
-import requests_cache
-requests_cache.install_cache(cache_name='popular_cache', backend='sqlite', expire_after=86400)
 
 def getPopular():
 	key  = '79f8797f2c2e527e4e396dfe9816a3cd'

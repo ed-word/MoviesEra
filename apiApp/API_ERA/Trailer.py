@@ -6,8 +6,6 @@ from tmdb3 import searchSeries
 from tmdb3 import Movie
 from tmdb3 import Series
 
-import requests_cache
-requests_cache.install_cache(cache_name='trailer_cache', backend='sqlite', expire_after=86400)
 
 key  = '79f8797f2c2e527e4e396dfe9816a3cd'
 youtube = 'https://www.youtube.com/watch?v='

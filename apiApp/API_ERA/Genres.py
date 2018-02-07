@@ -11,11 +11,9 @@ try:
 except:
 	from Classes import genreIdDict, genreNameDict, genreTVIdDict, genreTVNameDict, Movies, TV
 
-import requests_cache
-requests_cache.install_cache(cache_name='genre_cache', backend='sqlite', expire_after=86400)
 
-def getGenreList(genresMovie, genresTV):
-	key  = '79f8797f2c2e527e4e396dfe9816a3cd'
+def getGenreMovieList(genresMovie):
+	key = '79f8797f2c2e527e4e396dfe9816a3cd'
 	set_key(key)
 
 	#Movie
@@ -74,11 +72,17 @@ def getGenreList(genresMovie, genresTV):
 
 		movie_list += spare
 		GenreMovieList[genre] = movie_list
+	return GenreMovieList
 
+
+def getGenreTVList(genresTV):
+	key = '79f8797f2c2e527e4e396dfe9816a3cd'
+	set_key(key)
 
 	#TV
 	GenreTVList = {}
 	for genre in genresTV:
+		print(genre)
 		url = 'https://api.themoviedb.org/3/discover/tv?api_key='
 		extra = '&sort_by=popularity.desc&with_genres='
 		url += key
@@ -102,11 +106,11 @@ def getGenreList(genresMovie, genresTV):
 		tv_list = []
 		spare = []
 		for i in results:
-			if( i['genre_ids'][0]==genreID ):
+			if(i['genre_ids'][0] == genreID):
 				try:
 					m = Series(i['id'])
 					mx = TV()
-					mx.set(tv = m, spGenre = genre)
+					mx.set(tv = m, spGenre=genre)
 					tv_list.append(mx)
 				except:
 					pass
@@ -134,17 +138,17 @@ def getGenreList(genresMovie, genresTV):
 		tv_list += spare
 		GenreTVList[genre] = tv_list
 
-	return GenreMovieList, GenreTVList
+	return GenreTVList
 
 
 if __name__ == "__main__":
 
-    genresMovie = ['Crime','Thriller', 'Fantasy', 'Science Fiction']
+    genresMovie = ['Crime', 'Thriller', 'Fantasy', 'Science Fiction']
     genresTV = ['Comedy', 'Drama', 'Mystery', 'Reality']
 
 
-    genresMovie = ['Romance', 'Comedy', 'Drama']
-    genresTV = []
+    # genresMovie = ['Romance', 'Comedy', 'Drama']
+    # genresTV = []
     GenreMovieList, GenreTVList = getGenreList(genresMovie, genresTV)
 
     popMovies = []
